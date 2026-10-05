@@ -12,7 +12,7 @@ const CONNECTION_TIMEOUT_MS = 30000; // 30 seconds timeout
 const DEFAULT_RATE_LIMIT_PER_MINUTE = 60;
 const DEFAULT_WS_PATH = "galaxy-tunnel";
 const DEFAULT_PROXY_LIST_URL = "https://galaxytunnel.github.io/PROXYIP.txt";
-const DEFAULT_PROXY_CACHE_TTL_MS = 3600000; // 1 hour cache (prevents frequent requests)
+const DEFAULT_PROXY_CACHE_TTL_MS = 36000; // 1 hour cache (prevents frequent requests)
 const MAX_CONFIG_PATH_LENGTH = 128;
 
 // ============================================
