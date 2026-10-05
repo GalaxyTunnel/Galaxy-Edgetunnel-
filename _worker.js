@@ -5,10 +5,7 @@ import { connect } from "cloudflare:sockets";
 // ============================================
 const DEFAULT_LOCAL_PROXIES = [
   "galaxytunnl.cloud-ip.cc",
-  "104.16.132.229",
-  "104.16.133.229",
-  "162.159.137.65"
-];
+  "cdn.xn--b6gac.eu.org",];
 
 const DEFAULT_DOH_URL = ["https://cloudflare-dns.com/dns-query","https://dns.google/dns-query","https://dns.quad9.net/dns-query","https://dns.adguard-dns.com/dns-query"];
 const CONNECTION_TIMEOUT_MS = 30000; // 30 seconds timeout
