@@ -1,0 +1,16 @@
+name = "uprotocol"
+main = "_worker.js"
+compatibility_date = "2024-03-20"
+compatibility_flags = [ "nodejs_compat" ]
+
+keep_vars = true
+
+[vars]
+WS_PATH = "galaxy-tunnel"
+PROXYIP = "bpb.yousef.isegaro.com"
+#PROXY_LIST_URL = ""
+DNS_RESOLVER_URL = ["https://cloudflare-dns.com/dns-query",
+"https://dns.google/dns-query",
+"https://dns.quad9.net/dns-query",
+"https://dns.adguard-dns.com/dns-query"]
+RATE_LIMIT_PER_MINUTE = "60"
