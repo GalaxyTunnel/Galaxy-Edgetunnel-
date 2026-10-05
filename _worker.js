@@ -1,4 +1,4 @@
-import { connect } from "./cf-sockets.js";
+import { connect } from "cloudflare:sockets";
 
 // ============================================
 // CONSTANTS & DEFAULT CONFIGURATION
