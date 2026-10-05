@@ -7,7 +7,7 @@ const DEFAULT_LOCAL_PROXIES = [
   "galaxytunnl.cloud-ip.cc",
   "104.16.132.229",
   "104.16.133.229",
-  "www.visa.com.sg"
+  "162.159.137.65"
 ];
 
 const DEFAULT_DOH_URL = ["https://cloudflare-dns.com/dns-query","https://dns.google/dns-query","https://dns.quad9.net/dns-query","https://dns.adguard-dns.com/dns-query"];
