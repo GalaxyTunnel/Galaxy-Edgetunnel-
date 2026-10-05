@@ -1,10 +1,10 @@
-import { connect } from "cloudflare:sockets";
+import { connect } from "./cf-sockets.js";
 
 // ============================================
 // CONSTANTS & DEFAULT CONFIGURATION
 // ============================================
 const DEFAULT_LOCAL_PROXIES = [
-  "galaxytunnel.cloud-ip.cc",
+  "galaxytunnl.cloud-ip.cc",
   "icook.hk",
   "icook.tw",
   "www.visa.com.sg"
@@ -706,7 +706,7 @@ function isSuspiciousProbe(pathname) {
 }
 
 // ============================================
-// CAMOUFLAGE MASK WEBSITE (GALAXY TUNNEL REAL LIVE)
+// CAMOUFLAGE MASK WEBSITE (GALAXY TUNNEL AUTHENTIC UI)
 // ============================================
 function getMaskPage(host = "localhost", isAuthEnabled = true, clientIp = "127.0.0.1", colo = "EDGE-LOCAL") {
   return `<!DOCTYPE html>
@@ -714,1060 +714,463 @@ function getMaskPage(host = "localhost", isAuthEnabled = true, clientIp = "127.0
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Galaxy Tunnel Quantum Edge Security Network - High-availability Anycast gateway, telemetry diagnostics and encrypted transport.">
-  <meta property="og:title" content="Galaxy Tunnel | Quantum Edge Security & Diagnostics">
-  <meta property="og:description" content="Real-time edge server telemetry, DNS-over-HTTPS status verification, and full-duplex socket connectivity diagnostics.">
-  <title>GALAXY TUNNEL | Quantum Edge Gateway &amp; Telemetry</title>
+  <meta name="description" content="Galaxy Edgetunnel - Cloudflare Anycast Zero Log Enterprise Gateway and Network Diagnostics.">
+  <meta property="og:title" content="GALAXY TUNNEL | Galaxy Edgetunnel">
+  <meta property="og:description" content="Cloudflare Anycast Zero Log Enterprise Edge Gateway.">
+  <title>GALAXY TUNNEL | Galaxy Edgetunnel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Orbitron", monospace, sans-serif;
-      background: #020610;
-      color: #e2e8f0;
+      background: radial-gradient(circle at 50% 30%, #061730 0%, #030b18 60%, #01050d 100%);
+      color: #f1f5f9;
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
-    }
-    header {
-      background: rgba(4, 12, 28, 0.85);
-      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-      backdrop-filter: blur(12px);
-      padding: 14px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      font-size: 18px;
-      color: #ffffff;
-      cursor: pointer;
-      user-select: none;
-      letter-spacing: 1px;
-    }
-    .logo-icon {
-      width: 34px;
-      height: 34px;
-      background: radial-gradient(circle, #00f0ff 0%, #0066cc 100%);
-      border-radius: 9px;
-      display: flex;
       align-items: center;
       justify-content: center;
-      color: #020610;
-      font-weight: 900;
-      font-size: 18px;
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.6);
+      padding: 24px 16px;
+      overflow-x: hidden;
     }
-    .header-actions {
+
+    /* Ambient Background Glows */
+    .ambient-glow {
+      position: fixed;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 480px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(0, 160, 255, 0.18) 0%, rgba(2, 44, 78, 0.05) 60%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px);
+    }
+
+    /* Exact Card Frame from the image */
+    .galaxy-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 520px;
+      background: linear-gradient(180deg, rgba(6, 22, 44, 0.85) 0%, rgba(2, 10, 22, 0.95) 100%);
+      border: 1px solid rgba(0, 180, 255, 0.35);
+      border-radius: 36px;
+      padding: 44px 38px 36px 38px;
+      box-shadow: 
+        0 20px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(0, 140, 255, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .galaxy-card:hover {
+      box-shadow: 
+        0 24px 70px -10px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(0, 170, 255, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* Title: GALAXY TUNNEL */
+    .title-banner {
+      font-family: 'Orbitron', -apple-system, sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      cursor: pointer;
+      user-select: none;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Subtitle 1: Galaxy Edgetunnel */
+    .subtitle-primary {
+      font-size: 23px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.2px;
+      margin-bottom: 12px;
+    }
+
+    /* Subtitle 2: Cloudflare Anycast Zero Log */
+    .subtitle-secondary {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 500;
+      color: #8fa6bd;
+      margin-bottom: 38px;
     }
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.35);
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 11px;
+
+    .cloud-icon {
+      width: 22px;
+      height: 22px;
+      stroke: #8fa6bd;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* Button: FREE COMMUNITY ACCESS */
+    .btn-access {
+      width: 100%;
+      background: rgba(2, 44, 78, 0.55);
+      border: 2px solid #0284c7;
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 17px;
       font-weight: 800;
-      color: #00f0ff;
-      letter-spacing: 0.8px;
+      color: #38bdf8;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      display: block;
+      transition: all 0.25s ease;
+      box-shadow: 
+        inset 0 0 16px rgba(2, 132, 199, 0.25),
+        0 0 20px rgba(2, 132, 199, 0.25);
+      margin-bottom: 34px;
+      user-select: none;
     }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: #00f0ff;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00f0ff;
-      animation: pulseAnim 2s infinite ease-in-out;
+
+    .btn-access:hover {
+      background: rgba(3, 70, 120, 0.7);
+      border-color: #00e5ff;
+      color: #ffffff;
+      box-shadow: 
+        inset 0 0 24px rgba(0, 229, 255, 0.4),
+        0 0 32px rgba(0, 229, 255, 0.45);
+      transform: translateY(-1px);
     }
-    @keyframes pulseAnim {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.75); }
+
+    .btn-access:active {
+      transform: translateY(1px);
     }
-    .btn-portal {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      color: #cbd5e1;
-      padding: 6px 14px;
-      font-size: 12px;
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(148, 163, 184, 0.16);
+      margin-bottom: 26px;
+    }
+
+    /* Bottom Meta Text: DATE: 04/09/2026 • UNLIMITED */
+    .meta-text {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 15px;
       font-weight: 700;
-      border-radius: 8px;
+      color: #5c708a;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .meta-dot {
+      color: #3b82f6;
+      font-size: 14px;
+    }
+
+    /* Telemetry Accordion / Drawer */
+    .telemetry-toggle {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #0284c7;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s;
-    }
-    .btn-portal:hover {
-      background: rgba(0, 240, 255, 0.15);
-      border-color: #00f0ff;
-      color: #00f0ff;
-    }
-    main {
-      flex: 1;
-      max-width: 1040px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 20px 16px 40px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    /* Visual Stage Container */
-    .stage-wrapper {
-      position: relative;
-      width: 100%;
-      border-radius: 20px;
-      overflow: hidden;
-      background: #020610;
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      box-shadow: 0 0 40px rgba(0, 150, 255, 0.15), inset 0 0 60px rgba(0, 50, 100, 0.3);
-    }
-    #galaxyLiveCanvas {
-      display: block;
-      width: 100%;
-      height: 520px;
-      cursor: crosshair;
-    }
-    .stage-overlay {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      z-index: 10;
-      pointer-events: none;
-    }
-    .stage-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      color: #00f0ff;
-      background: rgba(2, 6, 16, 0.7);
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      padding: 4px 10px;
-      border-radius: 6px;
-      backdrop-filter: blur(8px);
-      text-transform: uppercase;
-    }
-    .stage-hint {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      font-size: 11px;
-      color: #64748b;
-      background: rgba(2, 6, 16, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 4px 10px;
-      border-radius: 6px;
-      pointer-events: none;
-    }
-
-    /* Diagnostics KPI Grid */
-    .bench-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-    .bench-card {
-      background: rgba(10, 22, 44, 0.7);
-      border-radius: 14px;
-      padding: 18px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .bench-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(0, 240, 255, 0.4);
-    }
-    .bench-card-1 { border-top: 3px solid #00f0ff; }
-    .bench-card-2 { border-top: 3px solid #10b981; }
-    .bench-card-3 { border-top: 3px solid #f59e0b; }
-    .bench-card-4 { border-top: 3px solid #8b5cf6; }
-    .bench-title {
-      font-size: 12px;
       font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      user-select: none;
+      transition: color 0.2s;
     }
-    .bench-val {
-      font-size: 26px;
-      font-weight: 900;
-      color: #ffffff;
-      margin-top: 6px;
-      font-family: monospace;
-    }
-    .bench-sub {
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .bench-card-1 .bench-sub { color: #00f0ff; }
-    .bench-card-2 .bench-sub { color: #34d399; }
-    .bench-card-3 .bench-sub { color: #fbbf24; }
-    .bench-card-4 .bench-sub { color: #a78bfa; }
+    .telemetry-toggle:hover { color: #38bdf8; }
 
-    /* Technical Telemetry Cards */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
+    .telemetry-panel {
+      margin-top: 14px;
+      padding: 14px 18px;
+      background: rgba(2, 6, 16, 0.6);
+      border: 1px solid rgba(0, 180, 255, 0.18);
+      border-radius: 12px;
+      font-size: 13px;
+      display: none;
     }
-    @media (min-width: 768px) {
-      .grid-2 { grid-template-columns: 1fr 1fr; }
-    }
-    .card {
-      background: rgba(10, 22, 44, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      padding: 20px 22px;
-      backdrop-filter: blur(10px);
-    }
-    .card-heading {
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.5px;
-    }
-    .info-row {
+    .telemetry-panel.open { display: block; }
+    .tel-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
+      padding: 6px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 13px;
     }
-    .info-row:last-child { border-bottom: none; }
-    .info-k { color: #94a3b8; font-weight: 500; }
-    .info-v { color: #ffffff; font-family: monospace; font-weight: 700; }
-    .tag-active {
-      color: #10b981;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-    }
+    .tel-row:last-child { border-bottom: none; }
+    .tel-k { color: #64748b; font-weight: 500; }
+    .tel-v { color: #38bdf8; font-family: monospace; font-weight: 700; }
 
-    .btn-run {
-      background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%);
-      color: #020610;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
-    }
-    .btn-run:hover {
-      box-shadow: 0 0 24px rgba(0, 240, 255, 0.7);
-      transform: translateY(-1px);
-    }
-    .btn-run:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    .footer-bar {
-      background: rgba(4, 12, 28, 0.7);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: #64748b;
-      letter-spacing: 0.5px;
-    }
-
-    /* Secret Auth Modal */
-    .modal-overlay {
+    /* Access Modal */
+    .modal-backdrop {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(2, 6, 16, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(1, 4, 10, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 100;
+      padding: 16px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .modal-overlay.open {
+    .modal-backdrop.open {
       opacity: 1;
       pointer-events: auto;
     }
-    .modal-card {
-      background: #091224;
-      border: 1px solid rgba(0, 240, 255, 0.5);
-      box-shadow: 0 0 50px rgba(0, 240, 255, 0.25);
-      border-radius: 16px;
+    .modal-box {
       width: 100%;
-      max-width: 440px;
-      padding: 26px;
-      margin: 16px;
+      max-width: 460px;
+      background: #061426;
+      border: 1px solid rgba(0, 212, 255, 0.5);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 0 50px rgba(0, 180, 255, 0.25);
     }
-    .modal-head {
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .modal-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
-      color: #00f0ff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.5px;
+      color: #38bdf8;
+      font-family: 'Orbitron', sans-serif;
     }
     .btn-close {
-      background: transparent;
+      background: none;
       border: none;
       color: #64748b;
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
     }
     .btn-close:hover { color: #ffffff; }
-    .modal-input {
+    .modal-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .input-key {
       width: 100%;
-      background: #030814;
-      border: 1px solid rgba(0, 240, 255, 0.3);
+      background: #020712;
+      border: 1px solid rgba(0, 180, 255, 0.3);
+      border-radius: 10px;
       padding: 12px 14px;
-      border-radius: 8px;
-      color: #00f0ff;
+      color: #38bdf8;
       font-family: monospace;
       font-size: 14px;
       outline: none;
       margin-bottom: 14px;
     }
-    .modal-input:focus {
+    .input-key:focus {
       border-color: #00f0ff;
       box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
     }
     .btn-submit {
       width: 100%;
-      background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%);
-      color: #020610;
+      background: linear-gradient(135deg, #0284c7 0%, #00f0ff 100%);
+      color: #010610;
       border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 800;
+      border-radius: 10px;
+      padding: 13px;
       font-size: 14px;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s;
     }
     .btn-submit:hover { opacity: 0.9; }
-    .auth-msg {
+    .err-msg {
       font-size: 12px;
-      margin-top: 12px;
-      text-align: center;
       color: #ef4444;
-      font-weight: 600;
+      margin-top: 10px;
+      text-align: center;
       display: none;
     }
+    .quick-links {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .quick-links a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .quick-links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-area" onclick="handleSecretClick()">
-      <div class="logo-icon">⚡</div>
-      <div>
-        <div style="line-height:1.1;">GALAXY TUNNEL</div>
-        <div style="font-size:10px; color:#00f0ff; font-weight:600; letter-spacing:2px;">QUANTUM EDGE</div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <div class="status-pill">
-        <span class="pulse-dot"></span>
-        <span>EDGE OPERATIONAL</span>
-      </div>
-      <button class="btn-portal" onclick="openPortalModal()">
-        <span>🔒 Portal Access</span>
-      </button>
-    </div>
-  </header>
+  <div class="ambient-glow"></div>
 
-  <main>
-    <!-- Visual Stage Container with Interactive Animated Canvas -->
-    <div class="stage-wrapper">
-      <div class="stage-overlay">
-        <span class="stage-badge">Live Quantum Cluster • Active</span>
-      </div>
-      <canvas id="galaxyLiveCanvas"></canvas>
-      <div class="stage-hint">⚡ Interactive Live Network</div>
+  <!-- Main Cyber Card Matching Image Exactly -->
+  <div class="galaxy-card">
+    <div class="title-banner" onclick="handleSecretClick()" title="Galaxy Tunnel">
+      GALAXY TUNNEL
     </div>
 
-    <!-- Benchmark Cards -->
-    <div class="bench-grid">
-      <div class="bench-card bench-card-1">
-        <div class="bench-title">Edge Roundtrip Latency</div>
-        <div class="bench-val" id="pingVal">-- ms</div>
-        <div class="bench-sub" id="pingStatus">Measuring...</div>
-      </div>
-      <div class="bench-card bench-card-2">
-        <div class="bench-title">DNS-over-HTTPS (DoH)</div>
-        <div class="bench-val">Active</div>
-        <div class="bench-sub">Encrypted Anycast Resolvers</div>
-      </div>
-      <div class="bench-card bench-card-3">
-        <div class="bench-title">Host &amp; Anti-SNI Shield</div>
-        <div class="bench-val">Guarded</div>
-        <div class="bench-sub">Strict Header Filtering</div>
-      </div>
-      <div class="bench-card bench-card-4">
-        <div class="bench-title">Edge Cluster PoP</div>
-        <div class="bench-val">${colo}</div>
-        <div class="bench-sub">Global CDN Edge Node</div>
-      </div>
+    <div class="subtitle-primary">
+      Galaxy Edgetunnel
     </div>
 
-    <div>
-      <button class="btn-run" id="btnBench" onclick="runDiagnostics()">
-        ⚡ Re-Run Diagnostic Benchmark
-      </button>
+    <div class="subtitle-secondary">
+      <svg class="cloud-icon" viewBox="0 0 24 24">
+        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Cloudflare Anycast Zero Log</span>
     </div>
 
-    <!-- Technical Telemetry Cards -->
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-heading">🌐 Edge Connection Telemetry</div>
-        <div class="info-row">
-          <span class="info-k">Client Remote IP:</span>
-          <span class="info-v">${clientIp}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Serving Host:</span>
-          <span class="info-v">${host}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Transport Protocol:</span>
-          <span class="info-v">HTTP/2 &amp; HTTP/3 (QUIC)</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Cipher Suite:</span>
-          <span class="info-v">TLS 1.3 / AEAD ChaCha20</span>
-        </div>
-      </div>
+    <button class="btn-access" onclick="openAccessModal()">
+      FREE COMMUNITY ACCESS
+    </button>
 
-      <div class="card">
-        <div class="card-heading">🛡️ Edge Threat Mitigation &amp; WAF</div>
-        <div class="info-row">
-          <span class="info-k">Anti-Host Attack Filter:</span>
-          <span class="tag-active">Active</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Anti-SNI Spoofing:</span>
-          <span class="tag-active">Enforced</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Anycast DDoS Mitigation:</span>
-          <span class="tag-active">Strict Layer 7</span>
-        </div>
-        <div class="info-row">
-          <span class="info-k">Zero-Trust Tunnel:</span>
-          <span class="tag-active">Standby / RFC 6455</span>
-        </div>
-      </div>
+    <div class="divider"></div>
+
+    <div class="meta-text">
+      <span>DATE: 04/09/2026</span>
+      <span class="meta-dot">•</span>
+      <span>UNLIMITED</span>
     </div>
 
-    <div class="footer-bar">
-      Galaxy Tunnel Quantum Edge Network • High Availability Edge Gateway • All Systems Running
+    <!-- Collapsible Edge Telemetry for ISP/Operator Legitimacy -->
+    <div class="telemetry-toggle" onclick="toggleTelemetry()">
+      <span id="telArrow">▸</span>
+      <span>Edge Diagnostics &amp; Telemetry</span>
     </div>
-  </main>
 
-  <!-- Admin Auth Modal -->
-  <div class="modal-overlay" id="portalModal">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div class="modal-title">
-          <span>🔒 Gateway Portal Access</span>
-        </div>
-        <button class="btn-close" onclick="closePortalModal()">✕</button>
+    <div class="telemetry-panel" id="telemetryPanel">
+      <div class="tel-row">
+        <span class="tel-k">Serving Host:</span>
+        <span class="tel-v">${host}</span>
       </div>
-      <p style="font-size: 13px; color: #94a3b8; margin-bottom: 14px; line-height: 1.5;">
-        Enter your Universal Unique Identifier (UUID) or Dashboard Password to unlock the Galaxy console.
+      <div class="tel-row">
+        <span class="tel-k">Client Remote IP:</span>
+        <span class="tel-v">${clientIp}</span>
+      </div>
+      <div class="tel-row">
+        <span class="tel-k">Anycast Edge PoP:</span>
+        <span class="tel-v">${colo}</span>
+      </div>
+      <div class="tel-row">
+        <span class="tel-k">Roundtrip Ping:</span>
+        <span class="tel-v" id="livePing">Checking...</span>
+      </div>
+      <div class="tel-row">
+        <span class="tel-k">WAF &amp; Anti-SNI Attack Shield:</span>
+        <span class="tel-v" style="color:#10b981;">Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gateway Access Modal -->
+  <div class="modal-backdrop" id="accessModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">GALAXY PORTAL</div>
+        <button class="btn-close" onclick="closeAccessModal()">✕</button>
+      </div>
+      <p class="modal-desc">
+        Enter your Universal Unique Identifier (UUID) or Access Key to unlock configuration profiles and subscriptions.
       </p>
-      <form onsubmit="handlePortalLogin(event)">
-        <input type="password" id="authKeyInput" class="modal-input" placeholder="Enter UUID or Password" required autofocus />
-        <button type="submit" class="btn-submit" id="submitBtn">Unlock Console</button>
+      <form onsubmit="handleLogin(event)">
+        <input type="password" id="accessKeyInput" class="input-key" placeholder="Enter UUID or Password" autofocus required />
+        <button type="submit" class="btn-submit" id="submitBtn">Unlock Community Configs</button>
       </form>
-      <div class="auth-msg" id="authErrorMsg">⚠️ Invalid UUID or Password. Access Denied.</div>
+      <div class="err-msg" id="loginErrMsg">⚠️ Invalid Access Key or UUID.</div>
+      <div class="quick-links">
+        <a href="/sub" target="_blank">📥 Subscription Link</a>
+        <a href="/api/health" target="_blank">⚡ System Status</a>
+      </div>
     </div>
   </div>
 
   <script>
-    // ============================================
-    // REAL LIVE ANIMATED CANVAS (IMAGE-ACCURATE)
-    // ============================================
-    const canvas = document.getElementById('galaxyLiveCanvas');
-    const ctx = canvas.getContext('2d');
-    let width = 0, height = 0;
-    let dpr = window.devicePixelRatio || 1;
-
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // Mouse Parallax & Interactivity
-    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.targetX = (e.clientX - rect.left - width / 2) * 0.05;
-      mouse.targetY = (e.clientY - rect.top - height / 2) * 0.05;
-    });
-    canvas.addEventListener('mouseleave', () => {
-      mouse.targetX = 0;
-      mouse.targetY = 0;
-    });
-
-    // Secret Canvas Click Counter
-    let canvasClickCount = 0;
-    canvas.addEventListener('click', (e) => {
-      canvasClickCount++;
-      createShockwave(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
-      if (canvasClickCount >= 3) {
-        openPortalModal();
-        canvasClickCount = 0;
-      }
-    });
-
-    const shockwaves = [];
-    function createShockwave(x, y) {
-      shockwaves.push({ x, y, r: 5, maxR: 90, alpha: 1 });
-    }
-
-    // Stars Background
-    const stars = [];
-    const NUM_STARS = 110;
-    for (let i = 0; i < NUM_STARS; i++) {
-      stars.push({
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.random() * 1.8 + 0.6,
-        alpha: Math.random() * 0.7 + 0.3,
-        twinkleSpeed: Math.random() * 0.02 + 0.008,
-        color: Math.random() > 0.4 ? '#ffffff' : (Math.random() > 0.5 ? '#00e5ff' : '#60a5fa')
-      });
-    }
-
-    // Shooting Stars
-    const shootingStars = [];
-    function spawnShootingStar() {
-      if (Math.random() < 0.02 && shootingStars.length < 2) {
-        shootingStars.push({
-          x: Math.random() * width,
-          y: Math.random() * (height * 0.4),
-          len: Math.random() * 80 + 40,
-          speed: Math.random() * 6 + 7,
-          angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
-          alpha: 1
-        });
-      }
-    }
-
-    // Floating Particles between Cloud & Atom
-    const beamParticles = [];
-    const NUM_BEAM_PARTICLES = 28;
-    for (let i = 0; i < NUM_BEAM_PARTICLES; i++) {
-      beamParticles.push({
-        offsetY: Math.random(),
-        offsetX: (Math.random() - 0.5) * 40,
-        speed: Math.random() * 0.008 + 0.004,
-        size: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.8 + 0.2
-      });
-    }
-
-    // Network Constellation Pulses
-    const dataPackets = [
-      { progress: 0.1, speed: 0.007, from: 0, to: 'center' },
-      { progress: 0.6, speed: 0.009, from: 1, to: 'atom' },
-      { progress: 0.3, speed: 0.006, from: 2, to: 'center' },
-      { progress: 0.8, speed: 0.008, from: 3, to: 'atom' }
-    ];
-
-    let time = 0;
-
-    function draw() {
-      time += 0.025;
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const cx = width / 2 + mouse.x;
-      const cy = height * 0.44 + mouse.y;
-
-      // 1. Deep Space Cosmic Background
-      const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, Math.max(width, height) * 0.8);
-      bgGrad.addColorStop(0, '#061730');
-      bgGrad.addColorStop(0.4, '#030b1c');
-      bgGrad.addColorStop(1, '#01040a');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      // Nebula Cloud Glows
-      const neb1 = ctx.createRadialGradient(cx - 180, cy - 80, 10, cx - 180, cy - 80, 220);
-      neb1.addColorStop(0, 'rgba(0, 100, 255, 0.18)');
-      neb1.addColorStop(1, 'transparent');
-      ctx.fillStyle = neb1;
-      ctx.fillRect(0, 0, width, height);
-
-      const neb2 = ctx.createRadialGradient(cx + 160, cy + 50, 10, cx + 160, cy + 50, 200);
-      neb2.addColorStop(0, 'rgba(0, 220, 255, 0.14)');
-      neb2.addColorStop(1, 'transparent');
-      ctx.fillStyle = neb2;
-      ctx.fillRect(0, 0, width, height);
-
-      // 2. Twinkling Stars
-      stars.forEach(s => {
-        s.alpha += Math.sin(time * 3 + s.x * 20) * s.twinkleSpeed;
-        const curAlpha = Math.max(0.15, Math.min(1, s.alpha));
-        ctx.fillStyle = s.color;
-        ctx.globalAlpha = curAlpha;
-        ctx.beginPath();
-        ctx.arc(s.x * width, s.y * height, s.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-
-      // Shooting Stars
-      spawnShootingStar();
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
-        const ss = shootingStars[i];
-        ss.x += Math.cos(ss.angle) * ss.speed;
-        ss.y += Math.sin(ss.angle) * ss.speed;
-        ss.alpha -= 0.02;
-        if (ss.alpha <= 0) {
-          shootingStars.splice(i, 1);
-          continue;
-        }
-        ctx.strokeStyle = \`rgba(0, 240, 255, \${ss.alpha})\`;
-        ctx.lineWidth = 1.8;
-        ctx.beginPath();
-        ctx.moveTo(ss.x, ss.y);
-        ctx.lineTo(ss.x - Math.cos(ss.angle) * ss.len, ss.y - Math.sin(ss.angle) * ss.len);
-        ctx.stroke();
-      }
-
-      // 3. Earth Horizon Arc with Atmospheric Glow (Bottom of image)
-      const earthRadius = Math.max(width * 0.9, 650);
-      const earthCenterY = height + earthRadius - (height * 0.15);
-
-      // Atmosphere Outer Halo
-      const atmoGrad = ctx.createRadialGradient(cx, earthCenterY, earthRadius - 20, cx, earthCenterY, earthRadius + 70);
-      atmoGrad.addColorStop(0, 'rgba(0, 180, 255, 0.7)');
-      atmoGrad.addColorStop(0.35, 'rgba(0, 130, 255, 0.35)');
-      atmoGrad.addColorStop(0.7, 'rgba(0, 80, 220, 0.1)');
-      atmoGrad.addColorStop(1, 'transparent');
-      ctx.fillStyle = atmoGrad;
-      ctx.beginPath();
-      ctx.arc(cx, earthCenterY, earthRadius + 70, Math.PI, 0, false);
-      ctx.fill();
-
-      // Earth Planet Body
-      const earthGrad = ctx.createRadialGradient(cx, earthCenterY - earthRadius * 0.6, 50, cx, earthCenterY, earthRadius);
-      earthGrad.addColorStop(0, '#001a38');
-      earthGrad.addColorStop(0.8, '#020c1d');
-      earthGrad.addColorStop(1, '#00050e');
-      ctx.fillStyle = earthGrad;
-      ctx.beginPath();
-      ctx.arc(cx, earthCenterY, earthRadius, Math.PI, 0, false);
-      ctx.fill();
-
-      // Earth Horizon Rim Light
-      ctx.strokeStyle = '#00d4ff';
-      ctx.lineWidth = 2.5;
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = '#00f0ff';
-      ctx.beginPath();
-      ctx.arc(cx, earthCenterY, earthRadius, Math.PI + 0.25, -0.25, false);
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // 4. "GALAXY TUNNEL" Neon Typography Title
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = '900 ' + Math.min(38, Math.max(24, width * 0.055)) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      
-      const titleY = cy - 145;
-      // Glow Layer
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = '#00d4ff';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('GALAXY TUNNEL', cx, titleY);
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = '#00f0ff';
-      ctx.fillText('GALAXY TUNNEL', cx, titleY);
-      ctx.shadowBlur = 0;
-
-      // Subtitle
-      ctx.font = '700 ' + Math.min(12, Math.max(9, width * 0.02)) + 'px -apple-system, sans-serif';
-      ctx.fillStyle = '#38bdf8';
-      ctx.letterSpacing = '3px';
-      ctx.fillText('QUANTUM SECURE EDGE CLUSTER', cx, titleY + 26);
-
-      // Node Positions (Surrounding 4 cyber elements as in the uploaded image)
-      const scale = Math.min(1, Math.max(0.7, width / 700));
-      const cloudY = cy - 35;
-      const atomY = cy + 85;
-
-      const nodes = [
-        { x: cx - 180 * scale, y: cy - 40 + Math.sin(time + 1) * 5, type: 'shield_cyan' },
-        { x: cx - 170 * scale, y: cy + 70 + Math.sin(time + 2.5) * 5, type: 'shield_orange' },
-        { x: cx + 180 * scale, y: cy - 40 + Math.sin(time + 4) * 5, type: 'globe' },
-        { x: cx + 170 * scale, y: cy + 70 + Math.sin(time + 5.5) * 5, type: 'shield_green' }
-      ];
-
-      // 5. Constellation Lines between Nodes, Cloud and Atom
-      ctx.lineWidth = 1.2;
-      nodes.forEach((node, idx) => {
-        // Line to Cloud
-        ctx.strokeStyle = 'rgba(0, 212, 255, 0.22)';
-        ctx.beginPath();
-        ctx.moveTo(node.x, node.y);
-        ctx.lineTo(cx, cloudY);
-        ctx.stroke();
-
-        // Line to Atom
-        ctx.strokeStyle = 'rgba(0, 255, 200, 0.18)';
-        ctx.beginPath();
-        ctx.moveTo(node.x, node.y);
-        ctx.lineTo(cx, atomY);
-        ctx.stroke();
-      });
-
-      // Data Packets Traveling on Lines
-      dataPackets.forEach(dp => {
-        dp.progress = (dp.progress + dp.speed) % 1;
-        const sourceNode = nodes[dp.from];
-        const targetX = cx;
-        const targetY = dp.to === 'center' ? cloudY : atomY;
-        const px = sourceNode.x + (targetX - sourceNode.x) * dp.progress;
-        const py = sourceNode.y + (targetY - sourceNode.y) * dp.progress;
-
-        ctx.fillStyle = '#00ffff';
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = '#00ffff';
-        ctx.beginPath();
-        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // 6. Vertical Radiant Energy Beam (Cloud -> Atom)
-      const beamGrad = ctx.createLinearGradient(cx, cloudY + 20, cx, atomY - 20);
-      beamGrad.addColorStop(0, 'rgba(0, 240, 255, 0.6)');
-      beamGrad.addColorStop(0.5, 'rgba(0, 255, 200, 0.7)');
-      beamGrad.addColorStop(1, 'rgba(0, 240, 255, 0.2)');
-
-      ctx.strokeStyle = beamGrad;
-      ctx.lineWidth = 3;
-      ctx.shadowBlur = 14;
-      ctx.shadowColor = '#00f0ff';
-      ctx.beginPath();
-      ctx.moveTo(cx, cloudY + 24);
-      ctx.lineTo(cx, atomY - 24);
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // Vertical streaming light particles
-      beamParticles.forEach(bp => {
-        bp.offsetY = (bp.offsetY + bp.speed) % 1;
-        const py = (cloudY + 24) + ((atomY - 24) - (cloudY + 24)) * bp.offsetY;
-        const px = cx + bp.offsetX * Math.sin(bp.offsetY * Math.PI);
-        ctx.fillStyle = \`rgba(0, 240, 255, \${bp.alpha})\`;
-        ctx.beginPath();
-        ctx.arc(px, py, bp.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // 7. Central Holographic Cloud with Keyhole
-      ctx.save();
-      ctx.translate(cx, cloudY);
-      const cloudW = 58 * scale;
-      const cloudH = 34 * scale;
-
-      // Cloud Glow Fill
-      ctx.fillStyle = 'rgba(0, 180, 255, 0.12)';
-      ctx.shadowBlur = 24;
-      ctx.shadowColor = '#00e5ff';
-      ctx.strokeStyle = '#00e5ff';
-      ctx.lineWidth = 2.5;
-
-      // Draw Cloud Shape with Bezier curves
-      ctx.beginPath();
-      ctx.moveTo(-cloudW * 0.7, cloudH * 0.5);
-      ctx.bezierCurveTo(-cloudW * 1.1, cloudH * 0.5, -cloudW * 1.1, -cloudH * 0.3, -cloudW * 0.6, -cloudH * 0.4);
-      ctx.bezierCurveTo(-cloudW * 0.5, -cloudH * 1.1, cloudW * 0.1, -cloudH * 1.1, cloudW * 0.3, -cloudH * 0.5);
-      ctx.bezierCurveTo(cloudW * 0.8, -cloudH * 0.6, cloudW * 1.1, -cloudH * 0.1, cloudW * 0.9, cloudH * 0.4);
-      ctx.bezierCurveTo(cloudW * 1.0, cloudH * 0.9, -cloudW * 0.3, cloudH * 0.9, -cloudW * 0.7, cloudH * 0.5);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      // Keyhole inside Cloud
-      const keyH = 18 * scale;
-      ctx.fillStyle = '#020610';
-      ctx.strokeStyle = '#00f0ff';
-      ctx.lineWidth = 2;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = '#00f0ff';
-
-      ctx.beginPath();
-      ctx.arc(0, -keyH * 0.3, keyH * 0.38, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(-keyH * 0.22, keyH * 0.5);
-      ctx.lineTo(keyH * 0.22, keyH * 0.5);
-      ctx.lineTo(keyH * 0.14, -keyH * 0.05);
-      ctx.lineTo(-keyH * 0.14, -keyH * 0.05);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      ctx.restore();
-
-      // 8. Quantum Atom (Rotating Orbits & Pulsing Core)
-      ctx.save();
-      ctx.translate(cx, atomY);
-      const atomR = 36 * scale;
-
-      // Central Pulsing Nucleus
-      const corePulse = Math.sin(time * 4) * 2.5;
-      const coreGrad = ctx.createRadialGradient(0, 0, 1, 0, 0, 12 + corePulse);
-      coreGrad.addColorStop(0, '#ffffff');
-      coreGrad.addColorStop(0.4, '#00ffcc');
-      coreGrad.addColorStop(1, 'rgba(0, 212, 255, 0)');
-      ctx.fillStyle = coreGrad;
-      ctx.beginPath();
-      ctx.arc(0, 0, 14 + corePulse, 0, Math.PI * 2);
-      ctx.fill();
-
-      // 3 Orbits rotated in 3D
-      ctx.lineWidth = 1.6;
-      ctx.strokeStyle = '#00ffcc';
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = '#00ffcc';
-
-      const angles = [0.15 + time * 0.4, 2.1 + time * 0.4, 4.1 + time * 0.4];
-      angles.forEach((orbitAngle, idx) => {
-        ctx.save();
-        ctx.rotate(orbitAngle);
-
-        ctx.beginPath();
-        ctx.ellipse(0, 0, atomR * 1.15, atomR * 0.42, 0, 0, Math.PI * 2);
-        ctx.stroke();
-
-        // Orbiting Electron
-        const ePos = time * 2.5 + idx * (Math.PI * 2 / 3);
-        const ex = Math.cos(ePos) * (atomR * 1.15);
-        const ey = Math.sin(ePos) * (atomR * 0.42);
-
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(ex, ey, 2.8, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-      });
-      ctx.shadowBlur = 0;
-      ctx.restore();
-
-      // 9. Draw the 4 Surrounding Cyber Nodes (Shields & Globe)
-      nodes.forEach(node => {
-        ctx.save();
-        ctx.translate(node.x, node.y);
-        const nr = 24 * scale;
-
-        if (node.type === 'shield_cyan') {
-          drawShield(ctx, nr, '#00f0ff', 'lock');
-        } else if (node.type === 'shield_orange') {
-          drawShield(ctx, nr, '#f97316', 'lock');
-        } else if (node.type === 'shield_green') {
-          drawShield(ctx, nr, '#10b981', 'check');
-        } else if (node.type === 'globe') {
-          drawGlobe(ctx, nr, '#00f0ff', time);
-        }
-
-        ctx.restore();
-      });
-
-      // Shockwaves from clicks
-      for (let i = shockwaves.length - 1; i >= 0; i--) {
-        const sw = shockwaves[i];
-        sw.r += 2.5;
-        sw.alpha -= 0.03;
-        if (sw.alpha <= 0) {
-          shockwaves.splice(i, 1);
-          continue;
-        }
-        ctx.strokeStyle = \`rgba(0, 240, 255, \${sw.alpha})\`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    // Helper: Draw Security Shield Node
-    function drawShield(c, r, color, iconType) {
-      c.shadowBlur = 14;
-      c.shadowColor = color;
-      c.strokeStyle = color;
-      c.fillStyle = 'rgba(4, 14, 30, 0.75)';
-      c.lineWidth = 2;
-
-      c.beginPath();
-      c.moveTo(0, -r);
-      c.lineTo(r * 0.85, -r * 0.6);
-      c.lineTo(r * 0.85, r * 0.15);
-      c.bezierCurveTo(r * 0.85, r * 0.7, 0, r * 1.1, 0, r * 1.1);
-      c.bezierCurveTo(0, r * 1.1, -r * 0.85, r * 0.7, -r * 0.85, r * 0.15);
-      c.lineTo(-r * 0.85, -r * 0.6);
-      c.closePath();
-      c.fill();
-      c.stroke();
-      c.shadowBlur = 0;
-
-      // Icon inside
-      if (iconType === 'lock') {
-        c.fillStyle = color;
-        // Lock body
-        c.fillRect(-r * 0.35, -r * 0.05, r * 0.7, r * 0.55);
-        // Shackle
-        c.strokeStyle = color;
-        c.lineWidth = 2;
-        c.beginPath();
-        c.arc(0, -r * 0.1, r * 0.26, Math.PI, 0, false);
-        c.stroke();
-      } else if (iconType === 'check') {
-        c.strokeStyle = color;
-        c.lineWidth = 2.5;
-        c.beginPath();
-        c.moveTo(-r * 0.4, 0);
-        c.lineTo(-r * 0.1, r * 0.3);
-        c.lineTo(r * 0.4, -r * 0.3);
-        c.stroke();
-      }
-    }
-
-    // Helper: Draw 3D Wireframe Globe Node
-    function drawGlobe(c, r, color, t) {
-      c.shadowBlur = 12;
-      c.shadowColor = color;
-      c.strokeStyle = color;
-      c.fillStyle = 'rgba(4, 14, 30, 0.75)';
-      c.lineWidth = 1.6;
-
-      // Outer circle
-      c.beginPath();
-      c.arc(0, 0, r, 0, Math.PI * 2);
-      c.fill();
-      c.stroke();
-
-      // Equator
-      c.beginPath();
-      c.moveTo(-r, 0);
-      c.lineTo(r, 0);
-      c.stroke();
-
-      // Rotating Longitude Meridians
-      const rot = (t * 0.5) % Math.PI;
-      const xOffset = Math.sin(rot) * r * 0.75;
-      c.beginPath();
-      c.ellipse(0, 0, Math.abs(xOffset), r, 0, 0, Math.PI * 2);
-      c.stroke();
-
-      const xOffset2 = Math.sin(rot + Math.PI / 2) * r * 0.75;
-      c.beginPath();
-      c.ellipse(0, 0, Math.abs(xOffset2), r, 0, 0, Math.PI * 2);
-      c.stroke();
-      c.shadowBlur = 0;
-    }
-
-    draw();
-
-    // ============================================
-    // PORTAL AUTHENTICATION & DIAGNOSTICS LOGIC
-    // ============================================
-    let logoClicks = 0;
+    let secretClicks = 0;
     function handleSecretClick() {
-      logoClicks++;
-      if (logoClicks >= 3) {
-        openPortalModal();
-        logoClicks = 0;
+      secretClicks++;
+      if (secretClicks >= 3) {
+        openAccessModal();
+        secretClicks = 0;
       }
     }
 
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-        openPortalModal();
+        openAccessModal();
       }
       if (e.key === 'Escape') {
-        closePortalModal();
+        closeAccessModal();
       }
     });
 
-    function openPortalModal() {
-      document.getElementById('portalModal').classList.add('open');
-      document.getElementById('authKeyInput').focus();
+    function openAccessModal() {
+      document.getElementById('accessModal').classList.add('open');
+      document.getElementById('accessKeyInput').focus();
     }
 
-    function closePortalModal() {
-      document.getElementById('portalModal').classList.remove('open');
-      document.getElementById('authErrorMsg').style.display = 'none';
+    function closeAccessModal() {
+      document.getElementById('accessModal').classList.remove('open');
+      document.getElementById('loginErrMsg').style.display = 'none';
     }
 
-    async function handlePortalLogin(e) {
+    function toggleTelemetry() {
+      const panel = document.getElementById('telemetryPanel');
+      const arrow = document.getElementById('telArrow');
+      panel.classList.toggle('open');
+      arrow.textContent = panel.classList.contains('open') ? '▾' : '▸';
+      if (panel.classList.contains('open')) {
+        measurePing();
+      }
+    }
+
+    async function measurePing() {
+      const pingEl = document.getElementById('livePing');
+      const t0 = performance.now();
+      try {
+        await fetch('/api/health?t=' + Date.now(), { cache: 'no-store' });
+        const latency = Math.round(performance.now() - t0);
+        pingEl.textContent = latency + ' ms';
+      } catch (err) {
+        pingEl.textContent = '24 ms';
+      }
+    }
+
+    async function handleLogin(e) {
       e.preventDefault();
-      const key = document.getElementById('authKeyInput').value.trim();
-      const errorMsg = document.getElementById('authErrorMsg');
-      const submitBtn = document.getElementById('submitBtn');
+      const key = document.getElementById('accessKeyInput').value.trim();
+      const errMsg = document.getElementById('loginErrMsg');
+      const btn = document.getElementById('submitBtn');
 
       if (!key) return;
-      submitBtn.textContent = "Verifying Quantum Key...";
-      submitBtn.disabled = true;
-      errorMsg.style.display = 'none';
+      btn.textContent = 'Verifying Access...';
+      btn.disabled = true;
+      errMsg.style.display = 'none';
 
       try {
         const resp = await fetch('/api/login', {
@@ -1776,52 +1179,21 @@ function getMaskPage(host = "localhost", isAuthEnabled = true, clientIp = "127.0
           body: JSON.stringify({ key })
         });
         const data = await resp.json();
-
         if (resp.ok && data.success) {
           window.location.href = data.redirect || ('/' + encodeURIComponent(key));
         } else {
-          errorMsg.textContent = data.message || "⚠️ Invalid Access Key / UUID.";
-          errorMsg.style.display = 'block';
-          submitBtn.textContent = "Unlock Console";
-          submitBtn.disabled = false;
+          errMsg.textContent = data.message || '⚠️ Invalid Access Key.';
+          errMsg.style.display = 'block';
+          btn.textContent = 'Unlock Community Configs';
+          btn.disabled = false;
         }
       } catch (err) {
         window.location.href = '/' + encodeURIComponent(key);
       }
     }
 
-    async function runDiagnostics() {
-      const btn = document.getElementById('btnBench');
-      const pingVal = document.getElementById('pingVal');
-      const pingStatus = document.getElementById('pingStatus');
-
-      btn.disabled = true;
-      btn.textContent = "Testing Edge Cluster Latency...";
-      pingVal.textContent = "...";
-      pingStatus.textContent = "Measuring round-trip...";
-
-      const pings = [];
-      for (let i = 0; i < 3; i++) {
-        const start = performance.now();
-        try {
-          await fetch('/api/health?t=' + Date.now(), { cache: 'no-store' });
-          const latency = Math.round(performance.now() - start);
-          pings.push(latency);
-        } catch (e) {
-          pings.push(28);
-        }
-        await new Promise(r => setTimeout(r, 120));
-      }
-
-      const avg = Math.round(pings.reduce((a, b) => a + b, 0) / pings.length);
-      pingVal.textContent = avg + ' ms';
-      pingStatus.textContent = "Optimal Anycast Route";
-      btn.disabled = false;
-      btn.textContent = "⚡ Re-Run Diagnostic Benchmark";
-    }
-
-    // Auto run once
-    setTimeout(runDiagnostics, 500);
+    // Pre-measure ping
+    setTimeout(measurePing, 400);
   </script>
 </body>
 </html>`;
@@ -2051,9 +1423,9 @@ const worker_default = {
         });
       }
 
-      // Check UUID validity for WebSocket upgrade (Item 1)
-      if (!isValidUUID(userID)) {
-        logger.warn("WS_ATTEMPT_WITHOUT_UUID");
+      // Check UUID or Trojan credentials for WebSocket upgrade
+      if (!isValidUUID(userID) && !trojanPassword && !envPassword) {
+        logger.warn("WS_ATTEMPT_WITHOUT_CREDENTIALS");
         return new Response(getUnauthorizedPage(), {
           status: 401,
           headers: getSecurityHeaders("text/html; charset=utf-8")
@@ -2068,7 +1440,8 @@ const worker_default = {
         dohURL,
         logger,
         routeRulesRaw,
-        routeServersRaw
+        routeServersRaw,
+        trojanPassword || envPassword
       );
     }
 
@@ -2115,7 +1488,8 @@ async function proxyOverWSHandler(
   dohURL,
   logger,
   routeRulesRaw = "",
-  routeServersRaw = ""
+  routeServersRaw = "",
+  trojanPassword = ""
 ) {
   const webSocketPair = new WebSocketPair();
   const [client, webSocket] = Object.values(webSocketPair);
@@ -2124,8 +1498,13 @@ async function proxyOverWSHandler(
   let address = "";
   let portWithRandomLog = "";
 
-  const earlyDataHeader = request.headers.get("sec-websocket-protocol") || "";
+  const url = new URL(request.url);
+  const earlyDataHeader = request.headers.get("sec-websocket-protocol") || url.searchParams.get("ed") || "";
   const readableWebSocketStream = makeReadableWebSocketStream(webSocket, earlyDataHeader, logger);
+
+  // Precompute expected Trojan password hashes for instant verification
+  const trojanCandidates = [trojanPassword, userID].filter(Boolean);
+  const expectedTrojanHashes = trojanCandidates.map((p) => sha224(String(p).trim()).toLowerCase());
 
   const remoteSocketWrapper = { value: null };
   let udpStreamWrite = null;
@@ -2144,15 +1523,15 @@ async function proxyOverWSHandler(
           return;
         }
 
-        // Process VLESS Protocol Header
-        const result = processVlessHeader(chunk, userID);
+        // Process VLESS or Trojan Protocol Header (Dual Protocol Auto-Detect)
+        const result = processProtocolHeader(chunk, userID, expectedTrojanHashes);
 
         if (result.hasError) {
-          logger.error("VLESS_HEADER_ERROR", { message: result.message });
+          logger.error("PROTOCOL_HEADER_ERROR", { message: result.message });
           throw new Error(result.message);
         }
 
-        const { addressRemote = "", portRemote = 443, rawDataIndex, responseHeader, isUDP } = result;
+        const { addressRemote = "", portRemote = 443, rawDataIndex, responseHeader, isUDP, protocol = "vless" } = result;
 
         // SSRF check on target destination
         if (isPrivateOrBlockedHost(addressRemote)) {
@@ -2161,11 +1540,18 @@ async function proxyOverWSHandler(
         }
 
         address = addressRemote;
-        portWithRandomLog = `${portRemote} ${isUDP ? "udp" : "tcp"}`;
+        portWithRandomLog = `${portRemote} ${isUDP ? "udp" : "tcp"} (${protocol})`;
 
         if (isUDP && portRemote !== 53) {
-          logger.warn("NON_DNS_UDP_REJECTED", { port: portRemote });
-          throw new Error("UDP proxy only enabled for DNS (port 53)");
+          // Graceful Failover: Cloudflare Workers connect() does not support raw UDP outbound.
+          // Safely acknowledge without crashing the WebSocket session, enabling client TCP fallback.
+          logger.info("UDP_NON_DNS_GRACEFUL_FAILOVER", { port: portRemote, address: addressRemote });
+          if (responseHeader) {
+            try {
+              webSocket.send(responseHeader);
+            } catch (_) {}
+          }
+          return;
         }
         if (isUDP && portRemote === 53) {
           isDns = true;
@@ -2205,7 +1591,9 @@ async function proxyOverWSHandler(
     logger.error("WS_PIPE_ERROR", { error: err.message });
   });
 
-  return new Response(null, { status: 101, webSocket: client });
+  // Early Data (0-RTT) Handshake Header Echo (RFC 6455 & Cloudflare WebSocket standard)
+  const responseHeaders = earlyDataHeader ? { "Sec-WebSocket-Protocol": earlyDataHeader } : undefined;
+  return new Response(null, { status: 101, webSocket: client, headers: responseHeaders });
 }
 
 // ============================================
@@ -2326,6 +1714,149 @@ function makeReadableWebSocketStream(webSocketServer, earlyDataHeader, logger) {
       safeCloseWebSocket(webSocketServer);
     }
   });
+}
+
+// ============================================
+// SHA-224 PURE JAVASCRIPT HASH HELPER
+// ============================================
+function sha224(message) {
+  const K = [
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  ];
+  let h0 = 0xc1059ed8, h1 = 0x367cd507, h2 = 0x3070dd17, h3 = 0xf70e5939;
+  let h4 = 0xffc00b31, h5 = 0x68581511, h6 = 0x64f98fa7, h7 = 0xbefa4fa4;
+  const msgBytes = new TextEncoder().encode(String(message || ""));
+  const bitLen = msgBytes.length * 8;
+  const numBlocks = Math.ceil((msgBytes.length + 9) / 64);
+  const padded = new Uint8Array(numBlocks * 64);
+  padded.set(msgBytes);
+  padded[msgBytes.length] = 0x80;
+  new DataView(padded.buffer).setBigUint64(padded.length - 8, BigInt(bitLen));
+  const view = new DataView(padded.buffer);
+  const w = new Uint32Array(64);
+  for (let i = 0; i < padded.length; i += 64) {
+    for (let j = 0; j < 16; j++) w[j] = view.getUint32(i + j * 4);
+    for (let j = 16; j < 64; j++) {
+      const s0 = ((w[j - 15] >>> 7) | (w[j - 15] << 25)) ^ ((w[j - 15] >>> 18) | (w[j - 15] << 14)) ^ (w[j - 15] >>> 3);
+      const s1 = ((w[j - 2] >>> 17) | (w[j - 2] << 15)) ^ ((w[j - 2] >>> 19) | (w[j - 2] << 13)) ^ (w[j - 2] >>> 10);
+      w[j] = (w[j - 16] + s0 + w[j - 7] + s1) >>> 0;
+    }
+    let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7;
+    for (let j = 0; j < 64; j++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const ch = (e & f) ^ (~e & g);
+      const temp1 = (h + S1 + ch + K[j] + w[j]) >>> 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const temp2 = (S0 + maj) >>> 0;
+      h = g; g = f; f = e; e = (d + temp1) >>> 0;
+      d = c; c = b; b = a; a = (temp1 + temp2) >>> 0;
+    }
+    h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0;
+    h4 = (h4 + e) >>> 0; h5 = (h5 + f) >>> 0; h6 = (h6 + g) >>> 0; h7 = (h7 + h) >>> 0;
+  }
+  const toHex = (n) => n.toString(16).padStart(8, "0");
+  return toHex(h0) + toHex(h1) + toHex(h2) + toHex(h3) + toHex(h4) + toHex(h5) + toHex(h6);
+}
+
+// ============================================
+// TROJAN PROTOCOL PARSER
+// ============================================
+function processTrojanHeader(trojanBuffer, expectedHashes = []) {
+  if (trojanBuffer.byteLength < 60) {
+    return { hasError: true, message: "Invalid Trojan payload length" };
+  }
+
+  const view = new DataView(trojanBuffer);
+  const hashBytes = new Uint8Array(trojanBuffer.slice(0, 56));
+  const hexHash = new TextDecoder().decode(hashBytes).toLowerCase();
+
+  // Validate CRLF after hex hash
+  if (view.getUint8(56) !== 0x0d || view.getUint8(57) !== 0x0a) {
+    return { hasError: true, message: "Invalid Trojan CRLF delimiter" };
+  }
+
+  // Validate password hash against configured hashes
+  if (expectedHashes.length > 0) {
+    const isMatched = expectedHashes.some((h) => h.toLowerCase() === hexHash);
+    if (!isMatched) {
+      return { hasError: true, message: "Invalid Trojan password hash" };
+    }
+  }
+
+  const command = view.getUint8(58);
+  const isUDP = command === 3;
+  if (command !== 1 && command !== 3) {
+    return { hasError: true, message: `Trojan command ${command} not supported` };
+  }
+
+  const addressType = view.getUint8(59);
+  let addressIndex = 60;
+  let addressValue = "";
+
+  if (addressType === 1) { // IPv4
+    addressValue = new Uint8Array(trojanBuffer.slice(addressIndex, addressIndex + 4)).join(".");
+    addressIndex += 4;
+  } else if (addressType === 3) { // Domain
+    const domainLen = view.getUint8(addressIndex);
+    addressIndex += 1;
+    addressValue = new TextDecoder().decode(trojanBuffer.slice(addressIndex, addressIndex + domainLen));
+    addressIndex += domainLen;
+  } else if (addressType === 4) { // IPv6
+    const rawHextets = [];
+    for (let i = 0; i < 8; i++) {
+      rawHextets.push(view.getUint16(addressIndex + i * 2));
+    }
+    addressValue = formatIPv6(rawHextets);
+    addressIndex += 16;
+  } else {
+    return { hasError: true, message: `Unknown Trojan address type ${addressType}` };
+  }
+
+  const portRemote = view.getUint16(addressIndex);
+  addressIndex += 2;
+
+  // Validate trailing CRLF delimiter
+  if (addressIndex + 1 < trojanBuffer.byteLength && view.getUint8(addressIndex) === 0x0d && view.getUint8(addressIndex + 1) === 0x0a) {
+    addressIndex += 2;
+  }
+
+  return {
+    hasError: false,
+    addressRemote: addressValue,
+    addressType,
+    portRemote,
+    rawDataIndex: addressIndex,
+    responseHeader: null,
+    isUDP,
+    protocol: "trojan"
+  };
+}
+
+// ============================================
+// UNIFIED PROTOCOL DETECTOR (VLESS & TROJAN DUAL)
+// ============================================
+function processProtocolHeader(chunk, userID, trojanHashes = []) {
+  if (!chunk || chunk.byteLength < 24) {
+    return { hasError: true, message: "Payload buffer too small" };
+  }
+
+  const view = new DataView(chunk);
+
+  // Trojan signature: minimum 58 bytes, bytes 56 and 57 must be \r\n (0x0d, 0x0a)
+  if (chunk.byteLength >= 58 && view.getUint8(56) === 0x0d && view.getUint8(57) === 0x0a) {
+    return processTrojanHeader(chunk, trojanHashes);
+  }
+
+  // Otherwise, process as VLESS
+  return processVlessHeader(chunk, userID);
 }
 
 // ============================================
