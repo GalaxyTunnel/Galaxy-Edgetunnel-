@@ -5,8 +5,8 @@ import { connect } from "cloudflare:sockets";
 // ============================================
 const DEFAULT_LOCAL_PROXIES = [
   "galaxytunnl.cloud-ip.cc",
-  "icook.hk",
-  "icook.tw",
+  "104.16.132.229",
+  "104.16.133.229",
   "www.visa.com.sg"
 ];
 
